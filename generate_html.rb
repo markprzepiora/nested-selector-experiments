@@ -56,7 +56,19 @@ nested   = ARGV[0] == "nested"
 css_name = nested ? "nested.css" : "unnested.css"
 
 puts <<-HTML
+  <script>
+    window.renderStart = new Date().getTime()
+    window.onload = function() {
+      var elapsed = new Date().getTime() - window.renderStart;
+      var timeDiv = document.querySelector("#render-time");
+      timeDiv.innerHTML = 'Rendered in ' + elapsed + 'ms';
+    }
+  </script>
+HTML
+
+puts <<-HTML
   <link rel="stylesheet" type="text/css" href="#{css_name}" />
+  <div id="render-time"></div>
 HTML
 
 (1..5000).each do |i|
