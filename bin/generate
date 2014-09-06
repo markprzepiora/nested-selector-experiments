@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mkdir -p public
+./generate_css.rb > public/styles.css
