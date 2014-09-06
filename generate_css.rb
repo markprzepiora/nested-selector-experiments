@@ -28,8 +28,9 @@ def rand_direction
   end
 end
 
-def write_rules(suffix)
+def write_rules(suffix, nested)
   name = ".component-#{suffix}"
+  separator = nested ? " " : "-"
 
   puts <<-CSS
     #{name} {
@@ -43,28 +44,28 @@ def write_rules(suffix)
       border-#{rand_direction}: #{rand_px(5)} solid #{rand_color};
     }
 
-    #{name} ul {
+    #{name}#{separator}ul {
       margin: #{rand_px_4};
       padding: #{rand_px_4};
       color: #{rand_color};
       background-color: #{rand_color};
     }
 
-    #{name} ul li {
+    #{name}#{separator}ul#{separator}li {
       margin: #{rand_px_4};
       padding: #{rand_px_4};
       color: #{rand_color};
       background-color: #{rand_color};
     }
 
-    #{name} ul li a {
+    #{name}#{separator}ul#{separator}li#{separator}a {
       margin: #{rand_px_4};
       padding: #{rand_px_4};
       color: #{rand_color};
       background-color: #{rand_color};
     }
 
-    #{name} ul li span {
+    #{name}#{separator}ul#{separator}li#{separator}span {
       margin: #{rand_px_4};
       padding: #{rand_px_4};
       color: #{rand_color};
@@ -74,6 +75,8 @@ def write_rules(suffix)
   CSS
 end
 
+nested = ARGV[0] == "nested"
+
 (1..100).each do |i|
-  write_rules(i)
+  write_rules(i, nested)
 end

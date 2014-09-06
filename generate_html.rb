@@ -28,37 +28,38 @@ def rand_direction
   end
 end
 
-def write_component(suffix)
-  name = "component-#{suffix}"
+def write_component(suffix, nested = true)
+  name       = "component-#{suffix}"
+  div_class  = name
+  ul_class   = nested ? "" : "#{name}-ul"
+  li_class   = nested ? "" : "#{name}-ul-li"
+  a_class    = nested ? "" : "#{name}-ul-li-a"
+  span_class = nested ? "" : "#{name}-ul-li-span"
+
+  li = <<-HTML
+    <li class="#{li_class}">
+      <a href="#" class="#{a_class}">A link</a> Some text <span class="#{span_class}">Some text in a span</span>
+    </li>
+  HTML
 
   puts <<-HTML
     <div class="#{name}">
-      <ul>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
-        <li><a href="#">A link</a> Some text <span>Some text in a span</span></li>
+      <ul class="#{ul_class}">
+        #{li*10}
       </ul>
     </div>
   HTML
 end
 
+
+nested   = ARGV[0] == "nested"
+css_name = nested ? "nested.css" : "unnested.css"
+
 puts <<-HTML
-  <link rel="stylesheet" type="text/css" href="nested.css">
+  <link rel="stylesheet" type="text/css" href="#{css_name}" />
 HTML
 
-(1..10000).each do |i|
+(1..5000).each do |i|
   number = rand(1..100)
-  write_component(number)
+  write_component(number, nested)
 end
