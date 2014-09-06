@@ -1,8 +1,23 @@
 #!/usr/bin/env bash
 
+set -eux
+
 rm -rf public
 mkdir -p public
 ./generate_css.rb > public/unnested.css
 ./generate_html.rb > public/unnested.html
-./generate_css.rb nested > public/nested.css
-./generate_html.rb nested > public/nested.html
+(
+  cd public
+
+  sed -E \
+    -e 's/"component-[0-9]+-ul[^"]*"/""/g' \
+    -e 's/unnested\.css/nested.css/g' \
+    unnested.html > nested.html
+
+  sed -E \
+    -e 's/-ul-li-span/ ul li span/g' \
+    -e 's/-ul-li-a/ ul li a/g' \
+    -e 's/-ul-li/ ul li/g' \
+    -e 's/-ul/ ul/g' \
+    unnested.css > nested.css
+)
