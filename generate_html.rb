@@ -67,6 +67,18 @@ nested   = ARGV[0] == "nested"
 css_name = nested ? "nested.css" : "unnested.css"
 
 puts <<-HTML
+  <script>
+    function onLoad() {
+      var now = new Date().getTime();
+      var page_load_time = now - performance.timing.navigationStart;
+      console.log("User-perceived page loading time: " + page_load_time);
+    }
+
+    window.addEventListener('load', onLoad);
+  </script>
+HTML
+
+puts <<-HTML
   <link rel="stylesheet" type="text/css" href="#{css_name}" />
   <div id="render-time"></div>
 HTML
