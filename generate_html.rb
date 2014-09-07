@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
+MyRand = Random.new(1)
+
+def rand(*args)
+  MyRand.rand(*args)
+end
+
 def rand_px(limit = 30)
   "#{rand(1..limit)}px"
 end
