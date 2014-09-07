@@ -42,6 +42,9 @@ def write_component(suffix, nested = true)
   a_class    = nested ? "" : "#{name}-ul-li-a"
   span_class = nested ? "" : "#{name}-ul-li-span"
 
+  empty_divs_start = "<div>"*10
+  empty_divs_end = "</div>"*10
+
   li = <<-HTML
     <li class="#{li_class}">
       <a href="#" class="#{a_class}">A link</a> Some text <span class="#{span_class}">Some text in a span</span>
@@ -50,9 +53,11 @@ def write_component(suffix, nested = true)
 
   puts <<-HTML
     <div class="#{name}">
-      <ul class="#{ul_class}">
-        #{li*10}
-      </ul>
+      #{empty_divs_start}
+        <ul class="#{ul_class}">
+          #{li*10}
+        </ul>
+      #{empty_divs_end}
     </div>
   HTML
 end
